@@ -1,0 +1,52 @@
+{
+  "name": "vendor1",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "axios": "^0.18.0",
+    "i": "^0.3.6",
+    "js-object-validation": "^1.0.16",
+    "mdbreact": "^4.13.0",
+    "npm": "^6.9.0",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-bootstrap-sweetalert": "^4.4.1",
+    "react-country-region-selector": "^1.4.3",
+    "react-dom": "^16.8.6",
+    "react-image-zoom": "^0.7.0",
+    "react-medium-zoom": "^1.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.0",
+    "react-select": "^2.4.3",
+    "react-share": "^2.4.0",
+    "react-toastify": "^5.1.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^8.10.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
