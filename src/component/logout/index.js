@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2'
+import { toast } from "react-toastify";
+
 class Logout extends Component {
     componentDidMount() {
         const token = localStorage.getItem("token");
         if (!token) {
           this.props.history.push("/login");
-          Swal.fire(
-            'Done!',
-            'You are successfully loggedOut!',
-            'success'
-          )
+         toast.success("Logout successfully");
         }
       }
 render() {
 return (  <div > className = {"animate"}
 
- <Link to={"/"} onClick={localStorage.clear()}>
+ <Link to={"/"} onClick={localStorage.clear()}> 
  LOGOUT 
 </Link> 
 </div>

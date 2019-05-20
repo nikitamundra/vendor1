@@ -42,21 +42,19 @@ a.nav-item {
   background: #fff;
   border: 3px solid #CCD;
   padding: 20px;
-  margin: 50px 0;
+  margin: 47px 27px;
   border-radius: 5px;
 }
 .table-bordered td {
   border: 2px solid #DEE2E3;
 }
-.a{
-    color: #eef3f9;
+.a {
+  color: white;
+  text-decoration: none;
+ 
 }
 
-.active {
-  background : slategray;
-  font-weight:  200px;
-  
-}
+
 .css-serial {
   counter-reset: serial-number ; /* Set the serial number counter to 0 */
  }
@@ -69,12 +67,12 @@ a.nav-item {
  }
 
  .navbar .nav-pills > li > a:hover {
-  background-color: gold;
+  background-color: none;
   color: black;
 }
 
 .navbar .nav-pills .active {
-background-color: gold;
+background-color: none;
 color:Black ;
 font-weight:bold;
 }
@@ -133,7 +131,6 @@ font-weight:bold;
 
   .flex-center {
     margin:40px auto;
-    
     color: white;
     border: 10px solid white;
     display: flex;
@@ -154,3 +151,39 @@ font-weight:bold;
       padding-top: 5px;
       padding-right: 6px;
     }
+  /* .nav{
+    background: none;
+font-weight: bold;
+border-bottom: 2px solid #fff;
+  } */
+  .active {
+  
+    font-weight:  200px;
+    background-color: none;
+    background: none;
+font-weight: bold;
+border-bottom: 2px solid #fff;
+
+
+  }
+  .margin{
+
+    margin-bottom: 0x;
+    margin-top: 40px;
+
+  }
+  .btnn{
+    color: #e84311;
+    
+  }
+  .bcol{
+      color: #ffffff;
+      text-decoration: none;
+      background-color: transparent;
+  }
+
+  .image-upload img
+{
+width: 80px;
+cursor: pointer;
+}

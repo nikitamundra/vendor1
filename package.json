@@ -20,6 +20,7 @@
     "react-dom": "^16.8.6",
     "react-image-zoom": "^0.7.0",
     "react-medium-zoom": "^1.0.0",
+    "react-particles-js": "^2.6.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "react-select": "^2.4.3",

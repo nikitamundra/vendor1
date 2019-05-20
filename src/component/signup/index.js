@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { withRouter } from "react-router-dom";
-import { FormControl, Button, FormGroup, Row, Col, FormLabel, FormCheck } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FormControl, Button, FormGroup, Row, Col, Tooltip, OverlayTrigger, FormLabel, FormCheck } from 'react-bootstrap';
 import Validator, { ValidationTypes } from "js-object-validation";
 import { toast } from 'react-toastify';
 import "./index.css";
@@ -19,8 +20,8 @@ class Signup extends Component {
       region: "",
       category: "this.state.value",
       option: "",
-      a:"",
-      b:"",
+      a: "",
+      b: "",
       categoryData: [],
       idproof: "",
       file: "",
@@ -34,12 +35,12 @@ class Signup extends Component {
       selectedCountry: 'India'
     };
   }
-  componentDidMount = async() => {
+  componentDidMount = async () => {
 
     const token = localStorage.getItem("token");
-      if (token) {
-        this.props.history.push("/product-list");
-      }
+    if (token) {
+      this.props.history.push("/product-list");
+    }
     try {
       Axios.get('http://192.168.2.146:8080/category')
         .then(res => {
@@ -59,25 +60,25 @@ class Signup extends Component {
           console.log(option);
           this.setState({ option, categoryData: result.result1 });
         })
-        const x = await Axios.post('http://192.168.2.146:8080/countmale');
-       const malep = x.data.result
-       
-      const y =  await Axios.post('http://192.168.2.146:8080/countfemale');
+      const x = await Axios.post('http://192.168.2.146:8080/countmale');
+      const malep = x.data.result
+
+      const y = await Axios.post('http://192.168.2.146:8080/countfemale');
       const femalep = y.data.result;
-        const z = parseInt( malep + femalep);
-        const p = malep/z;
-        const q =femalep/z;
-        const a = p *100;
-        const b = q *100;
-        this.setState({data :a})
-        this.setState({data1 :b})
-        
+      const z = parseInt(malep + femalep);
+      const p = malep / z;
+      const q = femalep / z;
+      const a = p * 100;
+      const b = q * 100;
+      this.setState({ data: a })
+      this.setState({ data1: b })
+
     }
     catch (error) {
       console.log(error)
     }
   }
-   
+
   onLogin = async (e) => {
     e.preventDefault();
     this.setState({
@@ -181,8 +182,8 @@ class Signup extends Component {
       this.props.history.push("/login")
       toast.success("Data submitted success");
 
-      
-  
+
+
     } catch (error) {
       console.log(error)
       this.setState({ isLoading: false });
@@ -215,10 +216,27 @@ class Signup extends Component {
     let autocountry = this.state.country.filter(country => {
       return country.name === e.target.value
     })
-   
+
     console.log(autocountry)
-    this.setState({ selectedCountry: e.target.value ,region: autocountry && autocountry.length ? autocountry[0].region :null})
+    this.setState({ selectedCountry: e.target.value, region: autocountry && autocountry.length ? autocountry[0].region : null })
   }
+
+  onChangefile = e => {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    this.setState({
+      file: e.target.files[0] ? e.target.files[0] : null,
+      imageUpdated: true
+    });
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  };
   render() {
     const { username,
       email,
@@ -243,136 +261,197 @@ class Signup extends Component {
       file: fileError,
     } = errors;
 
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = (
+      <img src={this.state.file} alt="No img selected" width="150px" height="150px" />
+    );
+    if (imagePreviewUrl) {
+      $imagePreview = (
+        <img src={imagePreviewUrl} alt="No img selected" width="150px" height="150px" />
+      );
+    }
 
     return (
+
+
       <Row className={"animate"}>
         <Col sm={6} md={4} lg={4} xs={12} />
         <Col sm={6} md={4} lg={4} xs={12} className={"auth-box"}>
           <h1 className={"h2"}>Sign Up </h1>
           <form onSubmit={this.onLogin} noValidate>
-            <FormGroup>
+            <Row  >
+              <Col>
+                <FormGroup >
+                  <FormLabel> <i className="fa fa-user left"></i>Enter username  <span className="required">*</span> </FormLabel>
+                  <FormControl id="username" name="username" placeholder={"username"} value={username} autoComplete="username" onChange={this.onInputChange} className={"c"} />
+                  {usernameError ? <p style={{ color: "red" }}>{usernameError}</p> : null}
+                </FormGroup>
+              </Col>
+              <Col  >
+                <FormGroup>
 
-              <FormLabel> <i className = "fa fa-user left"></i>Enter username  <span className="required">*</span> </FormLabel>
-              <FormControl id="username" name="username" placeholder={"username"} value={username} autoComplete="username" onChange={this.onInputChange} className={"c"} />
-              {usernameError ? <p style={{ color: "red" }}>{usernameError}</p> : null}
-            </FormGroup>
+                  <FormLabel> <i className="fa fa-envelope left"></i> Enter email  <span className="required">*</span> </FormLabel>
+                  <FormControl id="email" name="email" type="email" value={email} onChange={this.onInputChange} placeholder={"example@gmail.com"} />
+                  {emailError ? <p style={{ color: "red" }}>{emailError}</p> : null}
 
-            <FormGroup>
-              <FormLabel> <i className = "fa fa-envelope left"></i> Enter email  <span className="required">*</span> </FormLabel>
-              <FormControl id="email" name="email" type="email" value={email} onChange={this.onInputChange} placeholder={"example@gmail.com"} />
-              {emailError ? <p style={{ color: "red" }}>{emailError}</p> : null}
-            </FormGroup>
+                </FormGroup>
+              </Col>
+            </Row>
 
-            <FormGroup>
-              <FormLabel> <i className = "fa fa-key left"></i> Enter password <span className="required">*</span> </FormLabel>
-              <FormControl name="password" type="password" value={password} id="password" onChange={this.onInputChange} placeholder={"********"} />
-              {passwordError ? <p style={{ color: "red" }}>{passwordError}</p> : null}
-            </FormGroup>
+            <Row  >
+              <Col>
+                <FormGroup>
+                  <FormLabel> <i className="fa fa-key left"></i> Enter password <span className="required">*</span> </FormLabel>
+                  <FormControl name="password" type="password" value={password} id="password" onChange={this.onInputChange} placeholder={"********"} />
+                  {passwordError ? <p style={{ color: "red" }}>{passwordError}</p> : null}
+                </FormGroup>
+              </Col>
+              <Col  >
+                <FormGroup>
+                  <FormLabel> <i className="fa fa-lock left"></i> Re-type password <span className="required">*</span> </FormLabel>
+                  <FormControl name="cpassword" type="password" value={cpassword} id="cpassword" onChange={this.onInputChange} placeholder={"********"} />
+                  {cpasswordError ? <p style={{ color: "red" }}>{cpasswordError}</p> : null}
+                </FormGroup>
+              </Col>
+            </Row>
 
-            <FormGroup>
-              <FormLabel> <i className = "fa fa-lock left"></i> Re-type password <span className="required">*</span> </FormLabel>
-              <FormControl name="cpassword" type="password" value={cpassword} id="cpassword" onChange={this.onInputChange} placeholder={"********"} />
-              {cpasswordError ? <p style={{ color: "red" }}>{cpasswordError}</p> : null}
-            </FormGroup>
+            <Row  >
+              <Col>
+                <FormGroup>
+                  <FormLabel><i className="fa fa-phone-square left"></i> Enter Mobile no. <span className="required">*</span> </FormLabel>
+                  <FormControl name="mobile" type="number" value={mobile} id="mobile" onChange={this.onInputChange} placeholder={"+91 0000000000"} />
+                  {mobileError ? <p style={{ color: "red" }}>{mobileError}</p> : null}
+                </FormGroup>
+              </Col>
+              <Col  >
 
-            <FormGroup>
-              <FormLabel><i className = "fa fa-phone-square left"></i> Enter Mobile no. <span className="required">*</span> </FormLabel>
-              <FormControl name="mobile" type="number" value={mobile} id="mobile" onChange={this.onInputChange} placeholder={"+91 0000000000"} />
-              {mobileError ? <p style={{ color: "red" }}>{mobileError}</p> : null}
-            </FormGroup>
+                <FormGroup>
+                  <FormLabel> <i className="fas fa-female left"></i> Select Gender  <span className="required">*</span></FormLabel>
+                  <OverlayTrigger
+                    key="top"
+                    placement="left"
+                    overlay={
+                      <Tooltip id="tooltip-top">
+                        <strong>{this.state.data + "%"}</strong>
+                      </Tooltip>
+                    }
+                  >
+                    <FormCheck
+                      type="radio"
+                      label="Male"
+                      name="gender"
+                      id="gender"
+                      value="Male"
+                      checked={this.state.gender === "Male"}
+                      onChange={this.onInputChange}
+                    // data-toggle="tooltip" data-placement="top" title={this.state.data + "%"}
+                    />
+                  </OverlayTrigger>
 
-            <FormGroup>
-              <FormLabel> <i className = "fas fa-female left"></i> Select Gender  <span className="required">*</span></FormLabel>
-              <FormCheck
-                type="radio"
-                label="Male"
-                name="gender"
-                id="gender"
-                value="Male"
-                checked={this.state.gender === "Male"}
-                onChange={this.onInputChange}
-                data-toggle="tooltip" data-placement="top" title= {this.state.data +"%"}
-              />
-              <FormCheck
-                type="radio"
-                label="Female"
-                name="gender"
-                id="gender"
-                value="Female"
-                checked={this.state.gender === "Female"}
-                onChange={this.onInputChange}
-                data-toggle="tooltip" data-placement="top" title={this.state.data1 +"%"}
-              />
-              {genderError ? <p style={{ color: "red" }}>{genderError}</p> : null}
-            </FormGroup>
+                  <OverlayTrigger
+                    key="top"
+                    placement="left"
+                    overlay={
+                      <Tooltip id="tooltip-top">
+                        <strong>{this.state.data1 + "%"}</strong>
+                      </Tooltip>
+                    }
+                  >
+                    <FormCheck
+                      type="radio"
+                      label="Female"
+                      name="gender"
+                      id="gender"
+                      value="Female"
+                      checked={this.state.gender === "Female"}
+                      onChange={this.onInputChange}
+                      data-toggle="tooltip" data-placement="top" title={this.state.data1 + "%"}
+                    /></OverlayTrigger>
+                  {genderError ? <p style={{ color: "red" }}>{genderError}</p> : null}
+                </FormGroup>
+              </Col>
+            </Row>
 
-            <FormGroup margin="normal">
-              <FormLabel> <i className = "fa fa-list-alt left"></i> Select Category <span className="required">*</span> </FormLabel>
-              <FormControl as="select" name={"category"} value={this.state.category} onChange={this.onInputChange}>
-                <option value="">-Select Category Type-</option>
-                {categoryData && categoryData.length ? categoryData.map(category => {
-                  return <option key={category._cid} >{category.category}</option>
-                })
-                  : null})
+            <Row>
+              <Col>
+                <FormGroup margin="normal">
+
+                  <FormLabel><i className="fa fa-flag left"></i> Select Country <span className="required">*</span> </FormLabel>
+                  <FormControl as="select" value={this.state.selectedCountry} onChange={this.handleChange}  >
+                    {this.state.country.map((country, index) => {
+                      return <option key={index}>{country.name}</option>
+                    })
+
+                    }
+                  </FormControl>
+
+                </FormGroup>
+              </Col>
+              <Col>
+              <FormGroup>
+
+                
+                  <FormLabel> Region </FormLabel>
+                  <FormControl as="select" value={this.state.region} onChange={this.handleChange} >
+                    {
+                      this.state.country.map((country) => {
+                        return <option value={country.region}>{country.region}</option>
+                      })
+                    }
+                  </FormControl>
+               
+              </FormGroup>
+              </Col>
+            </Row>
+            <Row  >
+              <Col>
+                <FormGroup margin="normal">
+                  <FormLabel> <i className="fa fa-list-alt left"></i> Select Category <span className="required">*</span> </FormLabel>
+                  <FormControl as="select" name={"category"} value={this.state.category} onChange={this.onInputChange}>
+                    <option value="">-Select Category Type-</option>
+                    {categoryData && categoryData.length ? categoryData.map(category => {
+                      return <option key={category._cid} >{category.category}</option>
+                    })
+                      : null})
             </FormControl>
-              {categoryError ? <p style={{ color: "red" }}>{categoryError}</p> : null}
-            </FormGroup>
-
-            <FormGroup margin="normal">
-              <FormLabel><i className = "fa fa-flag left"></i> Select Country <span className="required">*</span> </FormLabel>
-              <FormControl as="select" value={this.state.selectedCountry} onChange={this.handleChange}  >
-                {  this.state.country.map((country, index) => {
-                    return <option key={index}>{country.name}</option>
-                  })
-                  
-                }
-              </FormControl>
-
-              <FormControl as="select" value={this.state.region}  onChange={this.handleChange} >
-                {
-                  this.state.country.map((country) => {
-                    return <option value={country.region}>{country.region}</option>
-                  })
-                }
-              </FormControl>
-            </FormGroup>
-
-            <FormGroup margin="normal">
-              <FormLabel><i className = "fa fa-id-card left"></i>   Select Idproof <span className="required">*</span> </FormLabel>
-              <FormControl as="select" name={"idproof"} placeholder="Id Proof" value={idproof} onChange={this.onInputChange} >
-                <option value={""}>-Select Id Proof Type-</option>
-                <option value={"voterId"}>Voter id</option>
-                <option value={"aadhar"}>Aadhar card</option>
-                <option value={"passport"} >Passport</option>
-              </FormControl>
-              {idproofError ? <p style={{ color: "red" }}>{idproofError}</p> : null}
-            </FormGroup>
-
+                  {categoryError ? <p style={{ color: "red" }}>{categoryError}</p> : null}
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup margin="normal">
+                  <FormLabel><i className="fa fa-id-card left"></i>   Select Idproof <span className="required">*</span> </FormLabel>
+                  <FormControl as="select" name={"idproof"} placeholder="Id Proof" value={idproof} onChange={this.onInputChange} >
+                    <option value={""}>-Select Id Proof Type-</option>
+                    <option value={"voterId"}>Voter id</option>
+                    <option value={"aadhar"}>Aadhar card</option>
+                    <option value={"passport"} >Passport</option>
+                  </FormControl>
+                  {idproofError ? <p style={{ color: "red" }}>{idproofError}</p> : null}
+                </FormGroup>
+              </Col>
+            </Row>
 
             <FormGroup>
               <FormLabel> <i className="fas fa-image left"></i> Upload valid idproof <span className="required">*</span> </FormLabel>
-              <FormControl name="file" type="file" onChange={this.onfileChange} placeholder={"choose file for idproof"} />
+              <FormControl name="file" type="file" onChange={this.onChangefile} placeholder={"choose file for idproof"} />
               {fileError ? <p style={{ color: "red" }}>{fileError}</p> : null}
             </FormGroup>
+            <FormGroup align="center">
+              <div className="imgPreview">{$imagePreview}</div>
+            </FormGroup>
 
+
+            <Link to="/login"><p>Already have an account!! Click here</p></Link>
             <Button
               type="submit"
               variant={"success"}
             > <i className="fas fa-user-plus left"></i>
-              {isLoading ? "please wait.." : "Sign Up"} 
-            </Button>
-            &nbsp;&nbsp;
-            <Button
-              variant={"primary"}
-              value={"Go to home"}
-              onClick={() => {
-                this.props.history.push("/login")
-              }}
-            >
-               <i className="fas fa-sign-in-alt left"></i>  Sign In</Button>
+              {isLoading ? "please wait.." : "Sign Up"}
+            </Button><br />
           </form>
         </Col>
       </Row>
+
     )
   }
 };

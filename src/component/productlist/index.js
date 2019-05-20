@@ -38,6 +38,8 @@ class List extends Component {
     toast("Product Deleted");
     this.getData();
   }
+
+  
   render() {
     const { product } = this.state;
 
@@ -45,26 +47,31 @@ class List extends Component {
       <>
         {product.length ? (
           <>
-            <h1 className={"h2"}>Product List </h1>
             <div>
-            <Link to={"/add-product"}>
-              <Fragment>
-                <MDBBtn color="info" style={{ float: "right" }} >
-                 <i className="fa fa-plus left"></i> 
-                Add Product
-</MDBBtn> <br />
-              </Fragment>
-            </Link>
-            </div>
-            <Table striped bordered hover className={"css-serial"} >
+              <nav>
+                
+                  <h1 className={"margin"}>Product List </h1>
+            
+                <Link to={"/add-product"}>
+                  <Fragment>
+                    <MDBBtn color="info" style={{ float: "right", bottom: "38px" }} >
+                      <i className="fa fa-plus left"></i>
+                      Add Product
+</MDBBtn>
+                  </Fragment>
+                </Link>
+              </nav>       </div>
+            <Table striped bordered hover className={"css-serial"} type="checkbox">
               <thead >
                 <tr>
-                  <th>Sr.no. </th>
+
+                  <th >Sr.no. </th>
+                  <th>Product image</th>
                   <th>Product title</th>
                   <th>Product description</th>
                   <th>Product price</th>
                   <th>Product selling price</th>
-                  <th>Product image</th>
+
                   <th colSpan="2">Actions</th>
                 </tr>
               </thead>
@@ -77,17 +84,18 @@ class List extends Component {
           </>
         ) : (
             <>
-              <h1 className={"h2"}>Product List </h1>
+              <h1 className={"margin"}>Product List </h1>
               <Link to={"/add-product"}>
                 <Fragment>
-                  <MDBBtn color="info" style={{ float: "right" }} >
+                  <MDBBtn color="info" style={{ float: "right", bottom: "38px" }} >
                     Add Product
 </MDBBtn> <br />
                 </Fragment>
               </Link>
-              <Table striped bordered hover className={"css-serial"} >
+              <Table striped bordered hover className={"css-serial"}  >
                 <thead >
-                  <tr>
+                  <tr >
+
                     <th>S No. </th>
                     <th>Product title</th>
                     <th>Product description</th>
@@ -103,19 +111,19 @@ class List extends Component {
                   }) : null}
                 </tbody>
               </Table>
-              <MDBIcon icon =  "ban" className = {"icons"}/>
+              <MDBIcon icon="ban" className={"icons"} />
               <p align="center"> Currently there are no product items  added. <br />
                 Please click below button to add new.</p>
-                <Button
-               className = {"flex-center"}
-              variant={"primary"}
-              value={"Go to home"}
-              onClick={() => {
-                this.props.history.push("/add-product")
-              }}
-            >
-             <i className="fa fa-plus left"></i> Add New </Button>
-              
+              <Button
+                className={"flex-center"}
+                variant={"primary"}
+                value={"Go to home"}
+                onClick={() => {
+                  this.props.history.push("/add-product")
+                }}
+              >
+                <i className="fa fa-plus left"></i> Add New </Button>
+
             </>
           )
         }

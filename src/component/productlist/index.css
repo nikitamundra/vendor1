@@ -1,0 +1,11 @@
+.dialog {
+    box-shadow: 0 8px 6px -6px hsl(0, 1%, 47%);
+    position: static;
+    left: 13%;
+    top: 5%;
+    box-align: bottom;
+    }
+    .image1 {
+        width: 398px;
+        height: 350px;
+    }

@@ -8,7 +8,9 @@ gender: String,
 country: String,
 category: String,
 idproof: String,
-file : String
+file : String,
+resetPasswordToken: String,
+resetPasswordExpires: Date,
 };
 
 const Usermodel = mongoose.model("User", User);

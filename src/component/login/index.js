@@ -3,7 +3,8 @@ import Axios from "axios";
 import { FormControl, Button, FormGroup, Row, Col, FormLabel } from 'react-bootstrap';
 import Validator, { ValidationTypes } from "js-object-validation";
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2'
+
+import { Link } from 'react-router-dom';
 import './index.css';
 
 class Login extends Component {
@@ -57,11 +58,7 @@ class Login extends Component {
          localStorage.setItem("token", response.data.token);
          localStorage.setItem("cId", response.data.result._id);
          console.log(this.props);
-         Swal.fire(
-            'Good job!',
-            'You are successfully loggedIn!',
-            'success'
-          )
+        
          toast.success("Login Successfully")
          this.props.history.push("/product-list")
       }
@@ -106,8 +103,8 @@ class Login extends Component {
                      <FormControl name="password" type="password" value={password} id="password" autoComplete="current-Password" onChange={this.onInputChange} placeholder={"Password"} />
                      {passwordError ? <p style={{ color: "red" }}>{passwordError}</p> : null}
                   </FormGroup>
-
-
+                  <Link  to ="/forgot-password"><p>Forgot password ?</p></Link>
+                  <Link  to ="/signup"><p>Not registered yet!! Click here</p></Link>
                   <Button
                      type="submit"
                      variant={"success"}
@@ -116,13 +113,8 @@ class Login extends Component {
                      {isLoading ? "Please wait.." : "Sign In"}
                      
                   </Button>
-                  &nbsp;&nbsp;
-                  <Button
-                     variant={"primary"}
-                     onClick={() => {
-                        this.props.history.push("/signup")
-                     }}
-                  > <i className="fas fa-user-plus left"></i> Sign up</Button>
+                 
+                
                </form>
             </Col>
 
